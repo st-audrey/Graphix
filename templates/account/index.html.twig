@@ -6,5 +6,6 @@
     <h1>Mon compte</h1>
     <h3>Bienvenue {{ app.user.firstname }}.</h3><br>
     <p>C'est ici que vous allez pourvoir gérer toutes vos informations personelles.</p>
-{#    TODO: Modifier le mot de passe/gérer mon adresses, mes commandes#}
+    <a href="{{ path('account_password') }}">Modifier votre mot de passe</a>
+{#    TODO: gérer mon adresses, mes commandes#}
 {% endblock %}

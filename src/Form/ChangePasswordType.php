@@ -11,50 +11,52 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
 
-
-class RegisterType extends AbstractType
+class ChangePasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('email', EmailType::class, [
+                'disabled' => true,
+                'label'=> 'Votre adresse email'
+            ])
+
             ->add('firstname', TextType::class, [
-                'label'=>'Votre prénom',
-                'constraints'=> new Length(['min'=> 3, 'max'=> 30]),
-                'attr'=>[
-                    'placeholder'=>"Amélie"
-                ]])
+                'disabled' => true,
+                'label'=> 'Votre prénom'
+            ])
 
             ->add('lastname', TextType::class, [
-                'label'=>'Votre nom',
-                'constraints'=> new Length(['min'=> 3, 'max'=> 30]),
-                'attr'=>[
-                    'placeholder'=>'Dupond'
-                ]])
+                'disabled' => true,
+                'label'=> 'Votre nom'
+            ])
 
-            ->add('email', EmailType::class, [
-                'label'=>'Votre adresse email',
-                'constraints'=> new Length(['min'=> 3, 'max'=> 30]),
+            ->add('old_password', PasswordType::class,[
+                'label'=> 'Votre mot de passe',
+                'mapped'=>false,
                 'attr'=>[
-                    'placeholder'=>'amelie.dupond@gmail.com'
-                ]])
+                    'placeholder'=>'Veuillez saisir votre mot de passe actuel'
+                ]
+            ])
 
-            ->add('password', RepeatedType::class, [
+            ->add('new_password', RepeatedType::class, [
                 'type'=> PasswordType::class,
-                'invalid_message'=> 'Le mot de passe et sa confirmation doivent être identiques',
+                'invalid_message'=> 'Votre nouveau mot de passe et sa confirmation doivent être identiques',
+                'mapped'=>false,
                 'required'=>true,
                 'first_options'=>[
-                    'label'=>'Mot de passe',
+                    'label'=>'Votre nouveau mot de passe',
                     'attr'=>[
                         'placeholder'=>"1234..."]],
-                'second_options'=>['label'=>'Confirmez votre mot de passe',
+                'second_options'=>['label'=>'Confirmez votre nouveau mot de passe',
                     'attr'=>['placeholder'=>"1234..."]]
-                ])
+            ])
 
             ->add('submit', SubmitType::class, [
-                'label'=>"S'inscrire"
+                'label'=>"Mettre à jour votre mot de passe"
             ]);
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
